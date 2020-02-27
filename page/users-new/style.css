@@ -1,0 +1,26 @@
+.required{
+    color: red;
+}
+#users-new p{
+    font-weight: bold; 
+    font-size: 20px;
+    margin-left: 100px;
+}
+td{
+    padding: 5px 10px;
+}
+#users-new{
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+#users-new h2{
+    text-align: center;
+    color: cornflowerblue;
+}
+#users-new2,#users-new1{
+    position: relative;
+    margin-left: 200px;
+}
+#users-new2 input{
+    margin-left: 20px;
+}

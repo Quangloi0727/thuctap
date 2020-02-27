@@ -1,0 +1,123 @@
+<%include ./layout/menuAdmin.ejs%>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <p class="text-center"><strong style="color: #FF3333;font-size: 25px;">Thêm mới sản phẩm</strong></p>
+                    <i style="font-size: 12px;">Vui lòng nhập đầy đủ thông tin vào các trường bên dưới !</i>
+                </div>
+                <div class="card-body card-block">
+                    <form action="/add-product" method="post" enctype="multipart/form-data">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Tên sản phẩm</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="name" name="name" placeholder="Nhập tên sản phẩm..."
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Giá sản phẩm</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="price" name="price" placeholder="Nhập giá sản phẩm..."
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Số lượng</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="quantity" name="quantity" placeholder="Nhập số lượng sản phẩm..."
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="textarea-input" class=" form-control-label">Mô tả</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea name="description" id="description" rows="4" placeholder="Nhập mô tả..."
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">Nhóm sản phẩm</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="groupProduct" id="groupProduct" class="form-control">
+                                    <option value="-1">---Chọn nhóm điện thoại---</option>
+                                    <option value="Iphone">Iphone</option>
+                                    <option value="Oppo">Oppo</option>
+                                    <option value="SamSung">SamSung</option>
+                                    <option value="Vivo">Vivo</option>
+                                    <option value="Nokia">Nokia</option>
+                                    <option value="Tổng hợp">Nhóm điện thoại khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 1</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="file" name="images" id="images" class="form-control-file" multiple> 
+                            </div>
+                        </div>
+                        <!-- <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 2</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="file" name="images" class="form-control-file">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 3</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="file" name="images" class="form-control-file">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 4</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="file" name="images" class="form-control-file">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 5</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="file" name="images" class="form-control-file">
+                            </div>
+                        </div> -->
+                        <div class="card-footer text-center">
+                            <button type="submit" id="Taomoi" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Tạo mới
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ./layout/footerAdmin%>
+<script src="/add-product/script.js"></script>
