@@ -23,8 +23,11 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/responsive.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
 </head>
+
 <body>
     <div class="header-area">
         <div class="container">
@@ -34,11 +37,17 @@
                         <ul class="list-unstyled list-inline">
                             <li class="dropdown dropdown-small">
                                 <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span
-                                        class="key">Hi, <i class="fa fa-user"></i></span><b class="caret"></b></a>         
+                                        class="key">Hi,<span id="displayName"></span> <i
+                                            class="fa fa-user"></i></span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li class="text-left"><a href="/login"><i class="fa fa-sign-in"> Đăng nhập</i></a></li>
-                                    <li class="text-left"><a href="#"><i class="fa fa-sign-out"> Đăng xuất</i></a></li>
-                                    <li class="text-left"><a href="#"><i class="fa fa-key"> Đổi mật khẩu</i></a></li>
+                                    <li class="text-left"><a href="/login"><i class="fa fa-sign-in"> Đăng nhập</i></a>
+                                    </li>
+                                    <li class="text-left"><a href="/customers-new"><i class="fa fa-sign-in"> Đăng
+                                                kí</i></a></li>
+                                    <li class="text-left" id="clickchangePass"><a href="#"><i class="fa fa-key"> Đổi mật
+                                                khẩu</i></a></li>
+                                    <li class="text-left"><a href="/logout"><i class="fa fa-sign-out" id="sign-out">
+                                                Đăng xuất</i></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -53,14 +62,14 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="/images/img_product/logo.png"></a></h1>
+                        <h1><a href="/home"><img src="/images/img_product/logo.png"></a></h1>
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="/cart">Cart - <span class="cart-amunt">$100</span> <i
-                                class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="/cart">Giỏ hàng<i class="fa fa-shopping-cart"></i>
+                            <span class="product-count"><%= quantityOrder %></span></a>
                     </div>
                 </div>
             </div>
@@ -80,29 +89,152 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="./">Trang chủ</a></li>
-                        <li><a href="/allProduct">Điện thoại</a>
-                            <div id="menu">
-                                <div class="nav1">
-                                    <ul class="nav navbar-nav1">
-                                        <li><a href="index.html">Sam sung</a></li>
-                                        <li><a href="single-product.html">Oppo</a></li>
-                                    </ul>
-                                </div>
-                                <div class="nav2">
-                                    <ul class="nav navbar-nav2">
-                                        <li><a href="index.html">Sam sung1</a></li>
-                                        <li><a href="single-product.html">Oppo1</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li><a href="single-product.html">Hàng cũ</a></li>
-                        <li><a href="cart.html">Phụ kiện</a></li>
-                        <li><a href="checkout.html">Khuyến mãi</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li class="active"><a href="/home">Trang chủ</a></li>
+                        <%
+                            listMenu.forEach(function(item){%>
+                                <li><a href="javascript:void(0)" id="<%= item.code %>"><%= item.name %></a>
+                                    <%
+                                        if(item.code=="ĐT"){%>
+                                            <div id="menu">
+                                                <div class="nav1">
+                                                    <ul class="nav navbar-nav1">
+                                                        <%
+                                                            listPhone1.forEach(function(item){%>
+                                                                <li><a href="javascript:void(0)" id="<%= item.code %>"><%= item.name %></a></li>
+                                                            <%})
+                                                        %>
+                                                    </ul>
+                                                </div>
+                                                <div class="nav2">
+                                                    <ul class="nav navbar-nav2">
+                                                        <%
+                                                            listPhone2.forEach(function(item){%>
+                                                                <li><a href="javascript:void(0)" id="<%= item.code %>"><%= item.name %></a></li>
+                                                            <%})
+                                                        %>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        <%}
+                                    %>
+                                </li>
+                            <%})
+                        %>
                     </ul>
                 </div>
             </div>
         </div>
     </div> <!-- End mainmenu area -->
+    <!-- Sửa thông tin Danh mục con -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi mật khẩu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label f-13">Nhập lại mật khẩu cũ: </label>
+                                <div class="">
+                                    <input class="form-control" type="text" id="oldPass">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label f-13">Nhập mật khẩu mới: </label>
+                                <div class="">
+                                    <input class="form-control" type="text" id="newPass">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label f-13">Xác nhận mật khẩu mới : </label>
+                                <div class="">
+                                    <input class="form-control" type="text" id="confirmNewPass">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="changePass">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            if (ca[i].indexOf("fullname") > 0) {
+                var displayName = ca[i].split("=");
+                $("#displayName").text(displayName[1])
+            }
+        }
+        $(document).on('click', '#clickchangePass', function (e) {
+            e.preventDefault();
+            $('.fade').modal(); //Show modal
+        })
+        //Cập nhật danh mục con
+        $(document).on("click", "#changePass", function (e) {
+            e.preventDefault();
+            var dataSend = {
+                oldPass: $('#oldPass').val(),
+                newPass: $('#newPass').val(),
+            }
+            if ($('#newPass').val() == $('#confirmNewPass').val()) {
+                $.ajax({
+                    method: "POST",
+                    url: "/edit-password",
+                    data: dataSend
+                }).done(function (resp) {
+                    if (resp.code == 200) {
+                        swal("Thành công !", "Mật khẩu đã được cập nhật", "success").then(function () {
+                            location.reload();
+                        })
+                    }else if(resp.code==400){
+                        swal("Thất bại !", "Bạn cần phải đăng nhập", "error").then(function () {
+                            window.location.href="/login"
+                        })
+                    } else {
+                        swal("Thất bại !", "Mật khẩu cũ nhập vào không đúng", "error")
+                    }
+                });
+            } else {
+                swal("Thất bại !", "Mật khẩu mới không trùng nhau", "error")
+            }
+        })
+        $(document).on('click', '#ĐT', function (e) {
+            window.location.href="/list-product"
+        })
+        $(document).on('click', '#AP', function (e) {
+            window.location.href="/list-product/?name=AP"
+        })
+        $(document).on('click', '#SS', function (e) {
+            window.location.href="/list-product/?name=SS"
+        })
+        $(document).on('click', '#VV', function (e) {
+            window.location.href="/list-product/?name=VV"
+        })
+        $(document).on('click', '#NK', function (e) {
+            window.location.href="/list-product/?name=NK"
+        })
+        $(document).on('click', '#OP', function (e) {
+            window.location.href="/list-product/?name=OP"
+        })
+        $(document).on('click', '#XM', function (e) {
+            window.location.href="/list-product/?name=XM"
+        })
+        $(document).on('click', '#HW', function (e) {
+            window.location.href="/list-product/?name=HW"
+        })
+    </script>

@@ -1,4 +1,5 @@
 <%include ./layout/menuAdmin.ejs%>
+<link rel="stylesheet" href="/stylesheets/dropzone.css">
 <!-- PAGE CONTAINER-->
 <div class="page-container">
     <!-- HEADER DESKTOP-->
@@ -12,7 +13,7 @@
                     <i style="font-size: 12px;">Vui lòng nhập đầy đủ thông tin vào các trường bên dưới !</i>
                 </div>
                 <div class="card-body card-block">
-                    <form action="/add-product" method="post" enctype="multipart/form-data">
+                    <form id="add-product">
                         <div class="row form-group">
                             <div class="col col-md-3">
                                 <label for="text-input" class=" form-control-label">Tên sản phẩm</label>
@@ -54,66 +55,84 @@
                                 <label for="select" class=" form-control-label">Nhóm sản phẩm</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <select name="groupProduct" id="groupProduct" class="form-control">
+                                <select name="category" id="groupProduct" class="form-control">
                                     <option value="-1">---Chọn nhóm điện thoại---</option>
-                                    <option value="Iphone">Iphone</option>
-                                    <option value="Oppo">Oppo</option>
-                                    <option value="SamSung">SamSung</option>
-                                    <option value="Vivo">Vivo</option>
-                                    <option value="Nokia">Nokia</option>
-                                    <option value="Tổng hợp">Nhóm điện thoại khác</option>
+                                    <%
+                                        groupProduct.forEach(function(item){%>
+                                            <option value=<%= item._id %>><%= item.name %></option>
+                                        <%})
+                                    %>
                                 </select>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 1</label>
+                                <label for="select" class=" form-control-label">Màu sản phẩm</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="file" name="images" id="images" class="form-control-file" multiple> 
-                            </div>
-                        </div>
-                        <!-- <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 2</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="file" name="images" class="form-control-file">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 3</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <input type="file" name="images" class="form-control-file">
+                                <select name="category" id="color" class="form-control" multiple>
+                                    <option value="-1">---Chọn nhóm màu--</option>
+                                    <%
+                                        color.forEach(function(item){%>
+                                            <option value=<%= item._id %>><%= item.name %></option>
+                                        <%})
+                                    %>
+                                </select>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 4</label>
+                                <label for="text-input" class=" form-control-label">Memory</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="file" name="images" class="form-control-file">
+                                <input type="text" id="memory" name="memory" placeholder="Nhập dung lượng bộ nhớ sản phẩm..."
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="file-input" class=" form-control-label">Ảnh sản phẩm 5</label>
+                                <label for="text-input" class=" form-control-label">Ram</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="file" name="images" class="form-control-file">
+                                <input type="text" id="ram" name="ram" placeholder="Nhập dung lượng ram sản phẩm..."
+                                    class="form-control">
                             </div>
-                        </div> -->
-                        <div class="card-footer text-center">
-                            <button type="submit" id="Taomoi" class="btn btn-primary btn-sm">
-                                <i class="fa fa-dot-circle-o"></i> Tạo mới
-                            </button>
-                            <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Camera</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="camera" name="camera" placeholder="Nhập thông tin camera sản phẩm..."
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Giảm giá</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="discount" name="discount" placeholder="Nhập giá khuyến mãi sản phẩm..."
+                                    class="form-control">
+                            </div>
                         </div>
                     </form>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">Ảnh sản phẩm</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <form id="upload-widget" action="/uploadfile" method="post" class="dropzone"></form>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button type="button" id="Taomoi" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Tạo mới
+                        </button>
+                        <button type="button" id="btn-back" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Quay lại
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,3 +140,4 @@
 </div>
 <%include ./layout/footerAdmin%>
 <script src="/add-product/script.js"></script>
+<script src="/javascripts/dropzone.js"></script>

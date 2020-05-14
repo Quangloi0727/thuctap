@@ -1,0 +1,83 @@
+<%include ./layout/menuAdmin.ejs%>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DATA TABLE -->
+                    <h3 class="title-5 m-b-35">Danh sách nhân viên</h3>
+                    <div class="table-data__tool">
+                        <form id="search" method="GET" action="/user">
+                            <div class="table-data__tool-left">
+                                <div class="rs-select2--light rs-select2--md">
+                                    <input type="text" name="code" placeholder="Tìm theo mã NV" class="form-control">
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <div class="rs-select2--light rs-select2--md">
+                                    <input type="text" name="name" placeholder="Tìm theo tên NV" class="form-control">
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <button class="au-btn-filter" type="submit">
+                                    <i class="zmdi zmdi-filter-list"></i>Lọc</button>
+                            </div>
+                        </form>
+                        
+                        <div class="table-data__tool-right">
+                            <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                <i class="zmdi zmdi-plus"></i>Thêm nhân viên</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive table-responsive-data2">
+                        <table class="table table-data2">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã nhân viên</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Tài khoản</th>
+                                    <th>Mật khẩu</th>
+                                    <th>Trạng thái</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    user.forEach(function(item,index){%>
+                                        <tr class="tr-shadow">
+                                            <td class="text-center"><%= index + 1 %></td>
+                                            <td class="desc"><%= item.code %></td>
+                                            <td class="desc"><%= item.fullname %></td>
+                                            <td class="desc"><%= item.username %></td>
+                                            <td class="desc"><%= item.password %></td>
+                                            <td class="desc"><input type="checkbox" style="width: 20px;height: 20px;" disabled <%if(item.status==true){%>checked<%}%>></td>
+                                            <td class="desc">
+                                                <div class="table-data-feature">
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <a href="/user-edit/<%= item._id %>"><i class="zmdi zmdi-edit"></i></a>
+                                                    </button>
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <i class="zmdi zmdi-delete" data-id="<%= item._id %>"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="spacer"></tr>
+                                    <%})
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ./layout/footerAdmin%>
+<script src="/user/script.js"></script>
+

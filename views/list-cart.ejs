@@ -1,0 +1,127 @@
+<%include ./layout/header.ejs%>
+<%
+    function totalAll(productOrder,product){
+        var totalAll=0;
+        productOrder.forEach(function(item2,i){
+            product.forEach(function(item1){
+                if(item1._id == item2.productId){
+                    totalAll+=item1.price * parseInt(item2.quantityOrder)
+                }
+            })
+        })
+        return totalAll;
+    }      
+%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Lịch sử mua hàng</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Page title area -->
+    
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+                            <%
+                                if(order.length>0){%>
+                                    <%
+                                        order.forEach(function(element,i){%>
+                                            <table cellspacing="0" class="shop_table cart">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="product-remove">STT</th>
+                                                        <th class="product-thumbnail">Ảnh sản phẩm</th>
+                                                        <th class="product-name">Tên sản phẩm</th>
+                                                        <th class="product-price">Giá</th>
+                                                        <th class="product-quantity">Số lượng</th>
+                                                        <th class="product-subtotal">Tổng</th>
+                                                        <th class="product-subtotal">Trạng thái</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%element.product.forEach(function(item1,index){
+                                                        element.productOrder.forEach(function(item2){
+                                                            if(item1._id.toString()==item2.phoneId.toString()){%>
+                                                                <tr class="cart_item">
+                                                                    <td class="product-remove">
+                                                                        <span><%= index+ 1 %></span>
+                                                                    </td>
+                        
+                                                                    <td class="product-thumbnail">
+                                                                        <img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="/images/img_product/<%= item1.images[0]%>">
+                                                                    </td>
+                                                                    <td class="product-name">
+                                                                        <a href="/product-detail/<%= item1._id %>"><%= item1.name %></a> 
+                                                                    </td>
+                        
+                                                                    <td class="product-price">
+                                                                        <span class="amount"><%= numeral(item1.price).format('0,0') %>₫</span> 
+                                                                    </td>
+                        
+                                                                    <td class="product-quantity">
+                                                                        <form class="dsMuaHang">
+                                                                            <div class="quantity buttons_added">
+                                                                                <%= item2.quantityOrder%>
+                                                                            </div> 
+                                                                        </form>
+                                                                    </td>
+                                                                    <td class="product-subtotal">
+                                                                        <span class="amount" id="totalProduct"><%= numeral(item1.price * parseInt(item2.quantityOrder)).format('0,0') %>₫</span> 
+                                                                    </td>
+                                                                    <td>
+                                                                        <span>
+                                                                            Chờ xử lý
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            <%}
+                                                        })
+                                                    })%>
+                                                    <tr>
+                                                        <td class="actions" colspan="7">
+                                                            <button class="destroy-cart btn btn-warning" type="button" data-id="<%= element._id %>">Hủy đơn hàng</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        <%})
+                                    %>
+                                <%}else{%>
+                                    <table cellspacing="0" class="shop_table cart">
+                                        <thead>
+                                            <tr>
+                                                <th class="product-remove">STT</th>
+                                                <th class="product-thumbnail">Ảnh sản phẩm</th>
+                                                <th class="product-name">Tên sản phẩm</th>
+                                                <th class="product-price">Giá</th>
+                                                <th class="product-quantity">Số lượng</th>
+                                                <th class="product-subtotal">Tổng</th>
+                                                <th class="product-subtotal">Trạng thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                               <td colspan="7"> <h4>Lịch sử mua hàng trống !</h4></td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                <%}
+                            %>  
+                        </div>                        
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <%include ./layout/footer.ejs%>
+    <script src="/list-card/script.js"></script>

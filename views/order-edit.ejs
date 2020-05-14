@@ -1,0 +1,372 @@
+<%include ./layout/menuAdmin.ejs%>
+<style>
+    .bgm {
+        background-color: #DDDDDD;
+    }
+
+    td {
+        color: black !important;
+    }
+
+    th {
+        background-color: black;
+        color: white !important;
+    }
+
+    .note {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    label{
+        font-weight: bold;
+    }
+    .col-sm-6 input{
+        border-bottom: 1px dotted  black;
+    }
+</style>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <%if(result[0].status=="0"){%>
+                    <form id="order-edit">
+                        <div class="col-lg-12">
+                            <h2 class="title-1 m-b-25">Thông tin đặt hàng</h2>
+                            <div class="row m-t-30">
+                                <div class="col-md-6 col-sm-6 columns-left">
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Ngày đặt hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext"
+                                                value="<%- moment(result[0].created).format('HH:mm DD/MM/YYYY')%>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Khách hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" 
+                                                value="<%= result[0].customer.fullname %>">
+                                            <input type="hidden"  class="form-control-plaintext" 
+                                                value="<%= result[0].customer.email %>" name="EmailTo">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Số điện thoại</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" 
+                                                value="<%= result[0].customer.phone %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Ghi chú đơn hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control-plaintext" name="note">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 columns-left">
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Mã đơn hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext"
+                                                value="<%= result[0].code %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Người giao hàng</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" style="background-color: #e8e4e4;" id="deliverer" name="deliverer">
+                                                <option>---Chọn---</option>
+                                                <%
+                                                    deliverer.forEach(function(item){%>
+                                                        <option value="<%= item._id %>" data-phone="<%= item.phone%>"><%= item.name %></option>
+                                                    <%})
+                                                %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">SĐT người giao hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" id="delivererPhone" name="delivererPhone">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Thời gian giao hàng dự kiến</label>
+                                        <div class="col-sm-6">
+                                            <input type="date" class="form-control-plaintext" name="expectedTime">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Địa chỉ giao hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control-plaintext" readonly
+                                                value="<%= result[0].customer.address %>" name="delivererAddress">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table--no-card m-b-40">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">STT</th>
+                                            <th class="text-center">Tên sản phẩm</th>
+                                            <th class="text-center">Giá sản phẩm</th>
+                                            <th class="text-center">Số lượng mua</th>
+                                            <th class="text-center">Thành tiền</th>
+                                            <th class="text-center">Giảm giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            result[0].product.forEach(function(item,index){%>
+                                                <tr>
+                                                    <td class="text-center"><%= index + 1%></td>
+                                                    <td class="text-center"><%= item.name %></td>
+                                                    <td class="text-center"><%= numeral(item.price).format('0,0') %>₫</td>
+                                                    <td class="text-center">
+                                                        <%
+                                                            result[0].productOrder.forEach(function(item2){
+                                                                if(item2.phoneId.toString()==item._id.toString()){%>
+                                                                    <%= item2.quantityOrder %>
+                                                                <%}
+                                                            })
+                                                        %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%
+                                                            result[0].productOrder.forEach(function(item2){
+                                                                if(item2.phoneId.toString()==item._id.toString()){%>
+                                                                    <%= numeral(item2.quantityOrder*item.price).format('0,0') %>₫
+                                                                <%}
+                                                            })
+                                                        %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%
+                                                            result[0].productOrder.forEach(function(item2){
+                                                                if(item2.phoneId.toString()==item._id.toString()){%>
+                                                                    <%= numeral(item.discount).format('0,0') %>₫
+                                                                <%}
+                                                            })
+                                                        %>
+                                                    </td>
+                                                </tr>
+                                            <%})
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 col-sm-6 float-right">
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-6 col-form-label">Giá trị đơn hàng</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" style="border-bottom: none;" readonly class="form-control-plaintext text-right" id="valueVoucher" name="valueVoucher"
+                                            value="<%= numeral(result[0].total).format('0,0') %> ₫">
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-6 col-form-label">Chi phí vận chuyển</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control-plaintext text-right" id="deliveryCost" name="deliveryCost" value="0 ₫">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-6 col-form-label">Khách hàng phải trả</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" style="border-bottom: none;" readonly class="form-control-plaintext text-right " id="customerPay" name="customerPay">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <%}else{%>
+                    <form id="order-edit">
+                        <div class="col-lg-12">
+                            <h2 class="title-1 m-b-25">Thông tin đặt hàng</h2>
+                            <div class="row m-t-30">
+                                <div class="col-md-6 col-sm-6 columns-left">
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Ngày đặt hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext"
+                                                value="<%- moment(result[0].created).format('HH:mm DD/MM/YYYY')%>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Khách hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" 
+                                                value="<%= result[0].customer.fullname %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Số điện thoại</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" 
+                                                value="<%= result[0].customer.phone %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Ghi chú đơn hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control-plaintext" name="note" value="<%= result[0].note %>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 columns-left">
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Mã đơn hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext"
+                                                value="<%= result[0].code %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Người giao hàng</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" style="background-color: #e8e4e4;" id="deliverer" name="deliverer" disabled>
+                                                <option>---Chọn---</option>
+                                                <%
+                                                    deliverer.forEach(function(item){%>
+                                                        <option value="<%= item._id %>" data-phone="<%= item.phone%>" <%
+                                                                if(item._id.toString() == result[0].delivererId.toString()){%>
+                                                                    selected
+                                                                <%}
+                                                            %>><%= item.name %></option>
+                                                    <%})
+                                                %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">SĐT người giao hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" id="delivererPhone" name="delivererPhone" value="<%= result[0].delivererPhone %>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Thời gian giao hàng dự kiến</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" readonly class="form-control-plaintext" name="expectedTime" value="<%- moment(result[0].expectedTime).format('DD/MM/YYYY')%>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-6 col-form-label">Địa chỉ giao hàng</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control-plaintext" readonly
+                                                value="<%= result[0].customer.address %>" name="delivererAddress">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table--no-card m-b-40">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">STT</th>
+                                            <th class="text-center">Tên sản phẩm</th>
+                                            <th class="text-center">Giá sản phẩm</th>
+                                            <th class="text-center">Số lượng mua</th>
+                                            <th class="text-center">Thành tiền</th>
+                                            <th class="text-center">Giảm giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            result[0].product.forEach(function(item,index){%>
+                                                <tr>
+                                                    <td class="text-center"><%= index + 1%></td>
+                                                    <td class="text-center"><%= item.name %></td>
+                                                    <td class="text-center"><%= numeral(item.price).format('0,0') %>₫</td>
+                                                    <td class="text-center">
+                                                        <%
+                                                            result[0].productOrder.forEach(function(item2){
+                                                                if(item2.phoneId.toString()==item._id.toString()){%>
+                                                                    <%= item2.quantityOrder %>
+                                                                <%}
+                                                            })
+                                                        %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%
+                                                            result[0].productOrder.forEach(function(item2){
+                                                                if(item2.phoneId.toString()==item._id.toString()){%>
+                                                                    <%= numeral(item2.quantityOrder*item.price).format('0,0') %>₫
+                                                                <%}
+                                                            })
+                                                        %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%
+                                                            result[0].productOrder.forEach(function(item2){
+                                                                if(item2.phoneId.toString()==item._id.toString()){%>
+                                                                    <%= numeral(item.price.discount).format('0,0') %>₫
+                                                                <%}
+                                                            })
+                                                        %>
+                                                    </td>
+                                                </tr>
+                                            <%})
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 col-sm-6 float-right">
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-6 col-form-label">Giá trị đơn hàng</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" style="border-bottom: none;" readonly class="form-control-plaintext text-right" id="valueVoucher" 
+                                            value="<%= numeral(result[0].total).format('0,0') %> ₫">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-6 col-form-label">Chi phí vận chuyển</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control-plaintext text-right" id="deliveryCost" name="deliveryCost" value="<%= numeral(result[0].deliveryCost).format('0,0') %> ₫">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-6 col-form-label">Khách hàng phải trả</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" style="border-bottom: none;" readonly class="form-control-plaintext text-right " id="customerPay" name="customerPay">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <%}%>
+            </div>
+            <div class="row button-group">
+                <div class="col-sm-offset-5 col-md-6 m-t-20" style="margin-left: 378px;">
+                    <button type="button" class="btn btn-secondary" id="back"><i class="m-r-5 zmdi zmdi-arrow-left"></i> Quay lại</button>
+                    <%
+                        if(result[0].status=="0"){%>
+                            <button type="button" class="btn btn-info m-l-10" id="submit" data-id="<%= result[0]._id %>"><i class="zmdi zmdi-check"></i> Chốt đơn hàng</button>
+                        <%}
+                    %>
+                    <%
+                        if(result[0].status=="1"){%>
+                            <button type="button" class="btn btn-info m-l-10" id="close" data-id="<%= result[0]._id %>"><i class="zmdi zmdi-close"></i> Đóng đơn </button>
+                            <button type="button" class="btn btn-info m-l-10" id="delete" data-id="<%= result[0]._id %>"><i class="zmdi zmdi-delete"></i> Hủy đơn </button>
+                        <%}
+                    %>
+                </div>
+            </div>
+            <%include ./layout/footerAdmin%>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="/order-edit/script.js"></script>

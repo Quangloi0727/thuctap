@@ -39,8 +39,18 @@ var admin = require('./controller/admin');
 admin(app);
 var product = require('./controller/product');  
 product(app);
-var users = require('./controller/users');  
-users(app);
+var customers = require('./controller/customers');  
+customers(app);
+var product_client = require('./controller/product-client');  
+product_client(app);
+var category = require('./controller/category');  
+category(app);
+var cart = require('./controller/cart');  
+cart(app);
+var order = require('./controller/order');  
+order(app);
+var user = require('./controller/user');  
+user(app);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

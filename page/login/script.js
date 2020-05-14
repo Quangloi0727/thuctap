@@ -9,7 +9,7 @@ $btnDangnhap.addEventListener('click', (e) => {
     }).done(function( resp ) {
         if (resp.code==200) {
             swal ( "Thành công !" ,  resp.message , "success" ).then(function() {
-                window.location.href = "/users-new";
+                window.location.href = "/home";
             })
         } else {
             swal ( "Thất bại !" , resp.message, "error" )

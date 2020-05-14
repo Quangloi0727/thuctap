@@ -58,7 +58,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="single-promo promo2">
                         <i class="fa fa-truck"></i>
-                        <p>Giao hàng miễn phí</p>
+                        <p>Giao hàng nhanh chóng</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -85,95 +85,33 @@
                     <div class="latest-product">
                         <h2 class="section-title">Sản phẩm mới nhất</h2>
                         <div class="product-carousel">
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="images/img_product/product-1.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ </a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
+                            <%
+                                product.reverse().forEach(function(pr){%>
+                                    <div class="single-product">
+                                        <div class="product-f-image">
+                                            <img src="images/img_product/<%= pr.images[0] %>" alt="" style="width: 195px;height: 243px;">
+                                            <div class="product-hover">
+                                                <a href="/product-detail/<%= pr._id %>" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
+                                            </div>
+                                        </div>            
+                                        <h2><a href="/product-detail/<%= pr._id %>"><%= pr.name %></a></h2>
+                                        <div class="product-wid-rating">
+                                            <%
+                                                rate.forEach(function(item){
+                                                    if(pr._id.toString()==item._id.toString()){
+                                                        for(let i=0;i< Math.round((item.rate / parseInt(item.length.length)));i++){%>
+                                                            <i class="fa fa-star"></i>
+                                                        <%}
+                                                    }
+                                                })
+                                            %>
+                                        </div>
+                                        <div class="product-carousel-price">
+                                            <ins><%= numeral(pr.price).format('0,0') %>₫</ins> <del><%= numeral(pr.discount).format('0,0') %>₫</del>
+                                        </div> 
                                     </div>
-                                </div>
-                                
-                                <h2><a href="single-product.html">Samsung Galaxy s5- 2015</a></h2>
-                                
-                                <div class="product-carousel-price">
-                                    <ins>$700.00</ins> <del>$100.00</del>
-                                </div> 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="images/img_product/product-2.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ </a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
-                                    </div>
-                                </div>
-                                
-                                <h2>Nokia Lumia 1320</h2>
-                                <div class="product-carousel-price">
-                                    <ins>$899.00</ins> <del>$999.00</del>
-                                </div> 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="images/img_product/product-3.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ </a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
-                                    </div>
-                                </div>
-                                
-                                <h2>LG Leon 2015</h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$400.00</ins> <del>$425.00</del>
-                                </div>                                 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="images/img_product/product-4.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ </a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
-                                    </div>
-                                </div>
-                                
-                                <h2><a href="single-product.html">Sony microsoft</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$200.00</ins> <del>$225.00</del>
-                                </div>                            
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="images/img_product/product-5.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ </a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
-                                    </div>
-                                </div>
-                                
-                                <h2>iPhone 6</h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$1200.00</ins> <del>$1355.00</del>
-                                </div>                                 
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="images/img_product/product-6.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ </a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
-                                    </div>
-                                </div>
-                                
-                                <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$400.00</ins>
-                                </div>                            
-                            </div>
+                                <%})
+                            %>
                         </div>
                     </div>
                 </div>
@@ -210,106 +148,72 @@
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Sản phẩm bán chạy</h2>
-                        <a href="" class="wid-view-more">View All</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Apple new mac book 2015</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
+                        <!-- <a href="" class="wid-view-more">View All</a> -->
+                        <%
+                            for(let i=0;i<=2;i++){%>
+                                <div class="single-wid-product">
+                                    <a href="#"><img src="images/img_product/<%= productSells[i].product.images[0] %>" alt="" class="product-thumb"></a>
+                                    <h2><a href="#"><%= productSells[i].product.name %></a></h2>
+                                    <div class="product-wid-rating">
+                                        <%
+                                            rate.forEach(function(item){
+                                                if(productSells[i].product._id.toString()==item._id.toString()){
+                                                    for(let i=0;i< Math.round((item.rate / parseInt(item.length.length)));i++){%>
+                                                        <i class="fa fa-star"></i>
+                                                    <%}
+                                                }
+                                            })
+                                        %>
+                                    </div>
+                                    <div class="product-wid-price">
+                                        <ins><%= numeral(productSells[i].product.price).format('0,0') %>₫</ins> <del><%= numeral(productSells[i].product.discount).format('0,0') %>₫</del>
+                                    </div>                            
+                                </div>
+                            <%}    
+                        %>  
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Đã xem gần đây</h2>
-                        <a href="#" class="wid-view-more">View All</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony Smart Air Condtion</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>                            
-                        </div>
+                        <%
+                            if(productseen.length>0){
+                                productseen.reverse().forEach(function(id,index){
+                                    product.forEach(function(pr){
+                                        if(id.toString()==pr._id.toString() && index <=2){%>
+                                            <div class="single-wid-product">
+                                                <a href="#"><img src="images/img_product/<%= pr.images[0] %>" alt="" class="product-thumb"></a>
+                                                <h2><a href="/product-detail/<%= pr._id %>"><%= pr.name %></a></h2>
+                                                <div class="product-wid-rating">
+                                                    <%
+                                                        rate.forEach(function(item){
+                                                            if(pr._id.toString()==item._id.toString()){
+                                                                for(let i=0;i< Math.round((item.rate / parseInt(item.length.length)));i++){%>
+                                                                    <i class="fa fa-star"></i>
+                                                                <%}
+                                                            }
+                                                        })
+                                                    %>
+                                                </div>
+                                                <div class="product-wid-price">
+                                                    <ins><%= numeral(pr.price).format('0,0') %>₫</ins> <del><%= numeral(pr.discount).format('0,0') %>₫</del>
+                                                </div>                            
+                                            </div>
+                                        <%}
+                                    })
+                                })
+                            }else{%>
+                                Danh sách đã xem rỗng !
+                            <%}
+                        %>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Phụ kiện giá rẻ</h2>
-                        <a href="#" class="wid-view-more">View All</a>
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Apple new i phone 6</a></h2>
+                            <a href="#"><img src="images/img_product/sac-du-phong.jpg" alt="" class="product-thumb"></a>
+                            <h2><a href="#">Sạc dự phòng</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -318,12 +222,12 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
+                                <ins><%= numeral(100000).format('0,0') %>₫</ins> <del><%= numeral(10000).format('0,0') %>₫</del>
                             </div>                            
                         </div>
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
+                            <a href="#"><img src="images/img_product/op-lung.jpg" alt="" class="product-thumb"></a>
+                            <h2><a href="3">Ốp điện thoại</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -332,12 +236,12 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
+                                <ins><%= numeral(30000).format('0,0') %>₫</ins>
                             </div>                            
                         </div>
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="images/img_product/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
+                            <a href="#"><img src="images/img_product/tai-nghe-iphone.png" alt="" class="product-thumb"></a>
+                            <h2><a href="#">Tai nghe chất lượng cao</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -346,7 +250,7 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
+                                <ins><%= numeral(250000).format('0,0') %>₫</ins> <del><%= numeral(30000).format('0,0') %>₫</del>
                             </div>                            
                         </div>
                     </div>

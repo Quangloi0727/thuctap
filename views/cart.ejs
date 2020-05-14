@@ -1,10 +1,37 @@
-<%include ../home/header.ejs%>
+<%include ./layout/header.ejs%>
+<%
+    function totalAll(productOrder,product){
+        var totalAll=0;
+        productOrder.forEach(function(item2,i){
+            product.forEach(function(item1){
+                if(item1._id == item2.productId){
+                    totalAll+=item1.price * parseInt(item2.quantityOrder)
+                }
+            })
+        })
+        return totalAll;
+    }      
+%>
+<%
+    function totalDiscount(productOrder,product){
+        var totalDiscount=0;
+        productOrder.forEach(function(item2,i){
+            product.forEach(function(item1){
+                if(item1._id == item2.productId){
+                    totalDiscount+=item1.discount * parseInt(item2.quantityOrder)
+                }
+            })
+        })
+        return totalDiscount;
+    }      
+%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <div class="product-big-title-area">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Shopping Cart</h2>
+                        <h2>Giỏ hàng của bạn</h2>
                     </div>
                 </div>
             </div>
@@ -15,157 +42,94 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Tìm kiếm sản phẩm</h2>
-                        <form action="#">
-                            <input type="text" placeholder="Nhập từ khóa...">
-                            <input type="submit" value="Tìm kiếm">
-                        </form>
-                    </div>
-                    
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Sản phẩm</h2>
-                        <div class="thubmnail-recent">
-                            <img src="images/img_product/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="images/img_product/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="images/img_product/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="images/img_product/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>                             
-                        </div>
-                    </div>
-                    
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Bài viết gần đây</h2>
-                        <ul>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                            <li><a href="#">Sony Smart TV - 2015</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action="#">
-                                <table cellspacing="0" class="shop_table cart">
-                                    <thead>
-                                        <tr>
-                                            <th class="product-remove">&nbsp;</th>
-                                            <th class="product-thumbnail">&nbsp;</th>
-                                            <th class="product-name">Tên sản phẩm</th>
-                                            <th class="product-price">Giá</th>
-                                            <th class="product-quantity">Số lượng</th>
-                                            <th class="product-subtotal">Tổng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
-                                            </td>
-
-                                            <td class="product-thumbnail">
-                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="images/img_product/product-thumb-2.jpg"></a>
-                                            </td>
-                                            <td class="product-name">
-                                                <a href="single-product.html">Ship Your Idea</a> 
-                                            </td>
-
-                                            <td class="product-price">
-                                                <span class="amount">£15.00</span> 
-                                            </td>
-
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                </div>
-                                            </td>
-
-                                            <td class="product-subtotal">
-                                                <span class="amount">£15.00</span> 
-                                            </td>
-                                        </tr>
-                                        <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
-                                            </td>
-
-                                            <td class="product-thumbnail">
-                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="images/img_product/product-thumb-2.jpg"></a>
-                                            </td>
-                                            <td class="product-name">
-                                                <a href="single-product.html">Ship Your Idea</a> 
-                                            </td>
-
-                                            <td class="product-price">
-                                                <span class="amount">£15.00</span> 
-                                            </td>
-
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                </div>
-                                            </td>
-
-                                            <td class="product-subtotal">
-                                                <span class="amount">£15.00</span> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="actions" colspan="6">
-                                                <input type="submit" value="Cập nhật giỏ hàng" name="update_cart" class="button">
-                                            </td>
-                                        </tr>
+                            <button class="list-cart btn btn-info" type="button" style="position: relative;left: 88.5%;top: -17px;">Lịch sử đặt hàng</button>
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">&nbsp;</th>
+                                        <th class="product-thumbnail">Ảnh sản phẩm</th>
+                                        <th class="product-name">Tên sản phẩm</th>
+                                        <th class="product-price">Giá</th>
+                                        <th class="product-quantity">Số lượng</th>
+                                        <th class="product-subtotal">Tổng</th>
+                                    </tr>
+                                </thead>
+                                <%
+                                    if(productOrder.length>0){%>
+                                        <tbody>
+                                            <%
+                                                productOrder.forEach(function(item2,i){%>
+                                                    <%product.forEach(function(item1){
+                                                        if(item1._id==item2.productId){%>
+                                                            <tr class="cart_item" data-id="<%= item1._id%>">
+                                                                <td class="product-remove">
+                                                                    <a title="Xóa sản phẩm này" class="remove" href="#"><i class="zmdi zmdi-delete" style="font-size: 20px;"></i></a> 
+                                                                </td>
+                    
+                                                                <td class="product-thumbnail">
+                                                                    <img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="/images/img_product/<%= item1.images[0]%>">
+                                                                </td>
+                                                                <td class="product-name">
+                                                                    <a href="/product-detail/<%= item1._id %>"><%= item1.name %></a> 
+                                                                </td>
+                    
+                                                                <td class="product-price">
+                                                                    <span class="amount"><%= numeral(item1.price).format('0,0') %>₫</span> 
+                                                                </td>
+                    
+                                                                <td class="product-quantity">
+                                                                    <form class="dsMuaHang">
+                                                                        <div class="quantity buttons_added" data-max="<%= item1.quantity %>">
+                                                                            <input type="number" size="4" class="input-text qty text" name="quantityOrder" id="quantityOrder<%= i %>"  value="<%= item2.quantityOrder%>" min="0" step="1" max="<%= item1.quantity %>">
+                                                                            <input type="hidden" name="_id" id="id<%= i %>" value="<%= item1._id%>">
+                                                                        </div> 
+                                                                    </form>
+                                                                </td>
+                                                                <td class="product-subtotal">
+                                                                    <span class="amount" id="totalProduct"><%= numeral(item1.price * parseInt(item2.quantityOrder)).format('0,0') %>₫</span> 
+                                                                </td>
+                                                            </tr>
+                                                        <%}
+                                                    })%>
+                                                <%})
+                                            %>
+                                            <tr>
+                                                <td class="actions" colspan="6">
+                                                    <button class="update_cart" type="button">Cập nhật giỏ hàng</button>
+                                                    <button class="submit-cart" type="button" style="margin-left: 10px;">Mua hàng</button>
+                                                </td>
+                                            </tr>
                                     </tbody>
-                                </table>
-                            </form>
-
+                                    <%}else{%>
+                                        <tbody>
+                                            <tr>
+                                                <td class="actions" colspan="6">
+                                                    <h4>Danh sách giỏ hàng trống !</h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    <%}
+                                %>
+                                
+                            </table>
                             <div class="cart-collaterals">
                             <div class="cross-sells">
                                 <h2>Bạn có thể quan tâm đến</h2>
                                 <ul class="products">
-                                    <li class="product">
-                                        <a href="single-product.html">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="images/img_product/product-2.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-                                    </li>
-                                    <li class="product">
-                                        <a href="single-product.html">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="images/img_product/product-4.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-                                    </li>
+                                    <%
+                                        ralteProduct.forEach(function(item,index){%>
+                                            <li class="product">
+                                                <a href="/product-detail/<%= item._id %>">
+                                                    <img style="width: 200px;height: 200px;" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="/images/img_product/<%= item.images[0] %>">
+                                                    <h3><%= item.name %></h3>
+                                                    <span class="price"><span class="amount"><ins><%= numeral(item.price).format('0,0') %>₫</ins> <del><%= numeral(item.discount).format('0,0') %>₫</del></span></span>
+                                                </a>
+                                            </li>
+                                        <%})
+                                    %>
                                 </ul>
                             </div>
 
@@ -177,17 +141,18 @@
                                     <tbody>
                                         <tr class="cart-subtotal">
                                             <th>Tiền hàng</th>
-                                            <td><span class="amount">£15.00</span></td>
+                                            <td class="text-right"><span class="amount"><%= numeral(totalAll(productOrder,product)).format('0,0') %>₫</span></td>
                                         </tr>
 
                                         <tr class="shipping">
-                                            <th>Phí vận chuyển</th>
-                                            <td>Free Shipping</td>
+                                            <th>Tiền giảm giá</th>
+                                            <td class="text-right"><span class="amount"><%= numeral(totalDiscount(productOrder,product)).format('0,0') %>₫</span></td>
                                         </tr>
 
                                         <tr class="order-total">
                                             <th>Tổng</th>
-                                            <td><strong><span class="amount">£15.00</span></strong> </td>
+                                            <td class="text-right"><strong><span class="amount"><%= numeral(totalAll(productOrder,product) - totalDiscount(productOrder,product)).format('0,0') %>₫</span></strong> </td>
+                                            <input type="hidden" id="totalAll" value="<%= totalAll(productOrder,product) - totalDiscount(productOrder,product) %>">
                                         </tr>
                                     </tbody>
                                 </table>
@@ -199,4 +164,8 @@
             </div>
         </div>
     </div>
-<%include ../home/footer.ejs%>
+    <%include ./layout/footer.ejs%>
+    <script src="/cart/script.js"></script>
+    <script>
+        var idCustomer = JSON.parse('<%- JSON.stringify(idCustomer)%>');
+    </script>

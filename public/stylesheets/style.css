@@ -143,13 +143,14 @@ z-index: 999;
     z-index: 9999;
 }
 #menu ul li a:hover{
-    color:red !important;
+    color:black !important;
 }
-.nav1,.nav2{
-    float: left;
+.nav1 li,.nav2 li {
+    width: 100px !important;
 }
 .navbar-nav li{
     position: relative;
+    float: left;
 }
 .navbar-nav li:hover #menu {
     display: block;
@@ -715,7 +716,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     border: 1px solid #ddd;
     padding: 10px;
 }
-input[type="submit"], button[type=submit] {
+input[type="submit"], button[type=submit],.update_cart,.submit-cart {
     background: none repeat scroll 0 0 #5a88ca;
     border: medium none;
     color: #fff;

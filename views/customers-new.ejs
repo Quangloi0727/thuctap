@@ -1,0 +1,60 @@
+<%include ./layout/header.ejs%>
+<link rel="stylesheet" type="text/css" href="/customers-new/style.css">
+<div id="users-new" class="container">
+    <form id="TaomoiUser"> 
+        <h2>Đăng kí tài khoản</h2>
+        <table id="users-new1">
+            <i>Những trường có dấu <span class="required">*</span> là bắt buộc nhập</i>
+            <kbd style="display: block;width: 672px;">Vui lòng nhập đầy đủ thông tin Địa chỉ và Email để việc giao hàng được thuận tiện.Xin cảm ơn !</kbd>
+            <p>Thông tin tài khoản</p>
+            <tbody>
+                <tr>
+                    <td>Tên đăng nhập <span class="required">*</span></td>
+                    <td><input type="text" name="username" id="username" size="40"></td>
+                </tr>
+                <tr>
+                    <td>Mật khẩu <span class="required">*</span></td>
+                    <td><input type="password" name="password"size="40" id="password" ></td>
+                </tr>
+                <tr>
+                    <td>Nhập lại mật khẩu</td>
+                    <td><input type="password" size="40" id="passwordConfirm"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="users-new2">
+            <p>Thông tin cá nhân</p>
+            <tbody>
+                <tr>
+                    <td>Email<span class="required">*</span></td>
+                    <td><input type="text" name="email" id="email" size="40" required="required" ></td>
+                </tr>
+                <tr>
+                    <td>Họ và Tên <span class="required">*</span></td>
+                    <td><input type="text" name="fullname" id="fullname" size="40" required="required" ></td>
+                </tr>
+                <tr>
+                    <td>Giới tính </td>
+                    <td><input type="radio" name="gender" value="Nam" required="required"> Nam <input type="radio" name="gender" value="Nữ" required="required"> Nữ</td>
+                </tr>
+                <tr>
+                    <td>Số điện thoại <span class="required">*</span></td>
+                    <td><input type="text" name="phone"size="40" id="phone"></td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ <span class="required">*</span></td>
+                    <td><input type="text" name="address"size="40" id="address"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button type="button" class="btn btn-primary" id="btn-back">Quay lại</button>
+                        <button type="button" class="btn btn-success" id="btn-dangki">Đăng kí</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>		
+</div>
+<%include ./layout/footer.ejs%>
+<script src="/customers-new/script.js"></script>
+

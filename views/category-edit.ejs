@@ -1,0 +1,191 @@
+<%include ./layout/menuAdmin.ejs%>
+<style>
+    th{
+        background-color: #333 !important;
+        color: white;
+    }
+    .input{
+        width: 120px;
+        border: 1px solid #333;
+    }
+    .input2{
+        width: 80px;
+        border: 1px solid #333;
+    }
+    .input3{
+        width: 100px;
+        border: 1px solid #333;
+    }
+    #editStatus{
+        height: 20px;
+        width: 20px;
+        position: relative;
+        left: 35px;
+        top: 5px;
+    }
+</style>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <p class="text-center"><strong style="color: #FF3333;font-size: 25px;">Sửa thông tin danh mục</strong></p>
+                    <i style="font-size: 12px;">Vui lòng nhập đầy đủ thông tin vào các trường bên dưới !</i>
+                </div>
+                <div class="card-body card-block container">
+                    <div class="row">
+                        <form id="category-edit" class="col-6">
+                            <div class="row form-group">
+                                <div class="col col-md-4">
+                                    <label for="text-input" class=" form-control-label">Tên danh mục</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="text" id="name" name="name" value="<%= category.name %>" placeholder="Nhập tên sản phẩm..."
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-4">
+                                    <label for="textarea-input" class=" form-control-label">Ghi chú</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <textarea name="note" id="note" rows="4" placeholder="Nhập ghi chú..."
+                                        class="form-control"><%= category.note %></textarea>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-4">
+                                    <label for="text-input" class=" form-control-label">Trạng thái</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="checkbox m-t-2 m-b-15">
+                                        <label>
+                                            <input type="checkbox" id="status" name="status" style="width: 20px;height: 20px;" <%if(category.status==true){%>checked <%}%> >
+                                            <i class="input-helper"></i>
+                                            <span class="p-l-10"> Kích hoạt</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        <div class="card-footer text-center col col-md-10">
+                            <button type="button" id="Sua" data-id="<%= category._id %>" class="btn btn-primary btn-sm m-r-20">
+                                <i class="zmdi zmdi-check"></i> Cập nhật
+                            </button>
+                            <button type="button" id="btn-back" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Quay lại
+                            </button>
+                        </div>
+                        </form>
+                        <form id="category-child" class="col-6" style="position: relative;right: 50px;">
+                            <h4>#Danh mục con</h4>
+                            <table class="table table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên danh mục</th>
+                                        <th>Giá trị</th>
+                                        <th>Trạng thái</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><input class="input" placeholder="VD: aaa" name="name" style="padding: 2px 5px;"></td>
+                                        <td><input class="input2" placeholder="VD: bbb" name="code" style="padding: 2px 5px;"></td>
+                                        <td>
+                                            <select class="input3" name="status" style="padding: 2px 5px;">
+                                                <option value="true">Kích hoạt</option>
+                                                <option value="false">Không kích hoạt</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" id="Taomoi" data-id="<%= category._id %>" class="btn btn-success btn-sm">
+                                                <i class="fa fa-plus"></i> Tạo mới
+                                            </button>
+                                        </td>             
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <%
+                                        data.forEach(function(item,index){%>
+                                            <tr>
+                                                <td><%= index + 1 %></td>
+                                                <td><%= item.name %></td>
+                                                <td><%= item.code %></td>
+                                                <td class="text-center"><input type="checkbox" style="width: 20px;height: 20px;" disabled <%if(item.status==true){%>checked<%}%>></td>
+                                                <td class="desc">
+                                                    <div class="table-data-feature">
+                                                        <button id="EditChild" class="item" data-placement="top" title="Edit" data-toggle="modal" data-id="<%= item._id %>" data-code="<%= item.code %>" data-status="<%= item.status%>" data-name="<%= item.name %>">
+                                                            <i class="zmdi zmdi-edit"></i>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                            <i class="zmdi zmdi-delete" data-id="<%= item._id %>"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <%})
+                                    %>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Sửa thông tin Danh mục con -->
+    <div class="modal fade" id="categoryChildEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Sửa danh mục con</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="control-label f-13">Tên danh mục: </label>
+                            <div class="">
+                                <input class="form-control" type="hidden" id="editId">
+                                <input class="form-control" type="text" id="editName">
+                            </div>
+                        </div>
+        
+                        <div class="col-md-4">
+                            <label class="control-label f-13">Giá trị: </label>
+                            <div class="">
+                                <input class="form-control" type="text" id="editCode">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label f-13">Trạng thái: </label>
+                            <div class="checkbox m-t-0">
+                                <label>
+                                    <input type="checkbox" id="editStatus">
+                                    <i class="input-helper"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              <button type="button" class="btn btn-primary" id="updateCategoryChild">Cập nhật</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<%include ./layout/footerAdmin%>
+<script src="/category-edit/script.js"></script>
+
