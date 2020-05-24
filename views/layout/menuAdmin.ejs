@@ -4,11 +4,8 @@
 <head>
     <!-- Required meta tags-->
     <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="application/vnd.ms-excel;">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
-
     <!-- Title Page-->
     <title><%= title %></title>
 
@@ -39,16 +36,20 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a href="/admin">
                     <img src="/images/icon/logo.png" alt="Cool Admin" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li>
+                        <li id="usermanager">
                             <a href="/user">
                                 <i class="zmdi zmdi-check"></i>Quản lý nhân viên</a>
+                        </li>
+                        <li>
+                            <a href="/deliverer">
+                                <i class="zmdi zmdi-check"></i>Quản lý Shipper</a>
                         </li>
                         <li>
                             <a href="/product">
@@ -62,20 +63,26 @@
                             <a href="/order">
                                 <i class="zmdi zmdi-check"></i>Danh sách đơn hàng</a>
                         </li>
+                        <li>
+                            <a href="/customers">
+                                <i class="zmdi zmdi-check"></i>Danh sách khách hàng</a>
+                        </li>
+                        <li>
+                            <a href="/new">
+                                <i class="zmdi zmdi-check"></i>Quản lý tin tức</a>
+                        </li>
             
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages</a>
+                                <i class="zmdi zmdi-check"></i>Báo cáo</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="login.html">Login</a>
+                                    <a href="/report-sells-product">- Danh sách sản phẩm bán chạy</a>
                                 </li>
                                 <li>
-                                    <a href="register.html">Register</a>
+                                    <a href="/report-sales-month">- Báo cáo doanh số</a>
                                 </li>
-                                <li>
-                                    <a href="forget-pass.html">Forget Password</a>
-                                </li>
+                           
                             </ul>
                         </li>
                     </ul>
@@ -83,3 +90,17 @@
             </div>
         </aside>
         <!-- END MENU SIDEBAR-->
+        <script>
+            var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    if (ca[i].indexOf("nameUser") > 0) {
+                        var displayName = ca[i].split("=");
+                        if(displayName[1]=="ADMIN STORE"){
+                            $("#usermanager").show()
+                        }else{
+                            $("#usermanager").hide()
+                        }
+                    }
+                }
+        </script>

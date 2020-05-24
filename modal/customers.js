@@ -5,7 +5,7 @@ var customers= new mongoose.Schema({
     password:{type:String,required:true},
     fullname:{type:String,required:true},
     gender:{type:Boolean},//true là nam,false là nữ
-    phone:{type:Number,required:true},
+    phone:{type:String,required:true},
     address:{type:String,required:true}},
     {collection:'customers'});
 module.exports = mongoose.model('customers',customers);

@@ -1,0 +1,109 @@
+<%include ./layout/menuAdmin.ejs%>
+<link rel="stylesheet" href="/stylesheets/dropzone.css">
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <p class="text-center"><strong style="color: #FF3333;font-size: 25px;">Chỉnh sửa tin tức</strong></p>
+                </div>
+                <div class="card-body card-block">
+                    <form id="new-edit">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Tiêu đề</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="title" name="title" placeholder="Nhập tiêu đề..." value="<%= n.title %>"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Thể loại</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select class="form-control" name="category">
+                                    <option value="Khuyến mãi" <%
+                                        if(n.category=="Khuyến mãi"){%>
+                                            selected
+                                        <%}
+                                    %>>Khuyến mãi</option>
+                                    <option value="Tin tức"
+                                        <%
+                                            if(n.category=="Tin tức"){%>
+                                                selected
+                                            <%}
+                                        %>
+                                    >Tin tức</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Từ ngày</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="date" id="form" name="form" placeholder="Áp dụng từ ngày..." value="<%= n.form %>" 
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Đến ngày</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="date" id="to" name="to" placeholder="Áp dụng đến ngày..."  value="<%= n.to %>" 
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="textarea-input" class=" form-control-label">Nội dung</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea name="content" id="content" rows="4" placeholder="Nhập mô tả..." 
+                                    class="form-control"><%= n.content %></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Trạng thái</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <div class="checkbox m-t-2 m-b-15">
+                                    <label>
+                                        <input type="checkbox" id="status" value="true" name="status" style="width: 20px;height: 20px;" <%
+                                            if(n.status==true){%>
+                                                checked
+                                            <%}
+                                        %>>
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-10"> Kích hoạt</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="card-footer text-center">
+                        <button type="button" id="Sua" data-id="<%= n._id %>" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i>Cập nhập
+                        </button>
+                        <button type="button" id="btn-back" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Quay lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ./layout/footerAdmin%>
+<script src="/new-edit/script.js"></script>
+<script src="/javascripts/dropzone.js"></script>

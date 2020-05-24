@@ -100,7 +100,7 @@ $(document).on('click', '.submit-cart', function () {
                     }).done(function (resp) {
                         if (resp.code == 200) {
                             swal("Thành công !", "Mua hàng thành công", "success").then(function () {
-                                location.reload();
+                                window.location.href="/home"
                             })
                         } else {
                             swal("Thất bại !", "Mua hàng thất bại", "error")

@@ -1,0 +1,85 @@
+<%include ./layout/menuAdmin.ejs%>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DATA TABLE -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thay đổi mật khẩu</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label class="control-label f-13">Nhập lại mật khẩu cũ: </label>
+                                            <div class="">
+                                                <input class="form-control" type="password" id="oldPass">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label class="control-label f-13">Nhập mật khẩu mới: </label>
+                                            <div class="">
+                                                <input class="form-control" type="password" id="newPass">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label class="control-label f-13">Xác nhận mật khẩu mới : </label>
+                                            <div class="">
+                                                <input class="form-control" type="password" id="confirmNewPass">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="changePass">Cập nhật</button>
+                        </div>
+                    </div>
+                    
+                    <!-- END DATA TABLE -->
+                </div>
+            </div>
+            <%include ./layout/footerAdmin%>
+        </div>
+    </div>
+</div>
+<script>
+//Cập nhật mật khẩu
+    $(document).on("click", "#changePass", function (e) {
+        e.preventDefault();
+        var dataSend = {
+            oldPass: $('#oldPass').val(),
+            newPass: $('#newPass').val(),
+        }
+        if ($('#newPass').val() == $('#confirmNewPass').val()) {
+            $.ajax({
+                method: "POST",
+                url: "/changePassUser",
+                data: dataSend
+            }).done(function (resp) {
+                if (resp.code == 200) {
+                    swal("Thành công !", "Mật khẩu đã được cập nhật", "success").then(function () {
+                        location.reload();
+                    })
+                } else {
+                    swal("Thất bại !", "Mật khẩu cũ nhập vào không đúng", "error")
+                }
+            });
+        } else {
+            swal("Thất bại !", "Mật khẩu mới không trùng nhau", "error")
+        }
+    })
+</script>
+

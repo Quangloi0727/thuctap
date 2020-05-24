@@ -135,6 +135,7 @@ module.exports = function (app) {
                     orderdetail.orderId = item._id
                     orderdetail.products = products;
                     orderdetail.save();
+                    req.session.cart=[]
                     res.json({ code: (error ? 500 : 200) });
                 });
             }
@@ -211,12 +212,21 @@ module.exports = function (app) {
         if(req.body.idClose){
             order.findById({"_id":req.body.idClose},function(err,dulieu){
                 dulieu.status=3;
+                dulieu.createdConfirm=Date.now();
                 dulieu.save();
                 res.json({ code: 200 })
             })
         }else if(req.body.idDelete){
             order.findById({"_id":req.body.idDelete},function(err,dulieu){
                 dulieu.status=2;
+                orderDetail.find({ "orderId": req.body.idDelete }, function (err1, dulieu1) {
+                    dulieu1[0].products.forEach((item) => {
+                        product.findById({ _id: item.phoneId }, function (err2, dulieu2) {
+                            dulieu2.quantity = dulieu2.quantity + item.quantityOrder
+                            dulieu2.save();
+                        })
+                    })
+                })
                 dulieu.save();
                 res.json({ code: 200 })
             })

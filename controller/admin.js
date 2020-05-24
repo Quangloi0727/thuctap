@@ -2,7 +2,9 @@ var user = require('../modal/user.js');
 module.exports = function (app) {
     //Trang quản trị 
     app.get('/admin', function (req, res) {
-        res.render('admin', { title: 'Trang quản trị' });
+        res.render('admin', {
+            title: 'Trang quản trị'
+        });
     });
     //trang login trang quản trị
     app.get('/login-admin', function (req, res) {
@@ -28,5 +30,21 @@ module.exports = function (app) {
         res.clearCookie('userId');
         res.clearCookie('avt');
         res.redirect('/login-admin');
+    });
+    //thay đổi mật khẩu user
+    app.get('/changePassUser', function (req, res) {
+        res.render('changePassUser', { title: 'Thay đổi mật khẩu' });
+    });
+    //thay đổi mật khẩu user
+    app.post('/changePassUser', function (req, res) {
+        user.findById({ _id: req.cookies.userId }, function (err, data) {
+            if (data.password != req.body.oldPass) {
+                res.json({ code: 500 })
+            } else {
+                data.password = req.body.newPass;
+                data.save();
+                res.json({ code: 200 })
+            }
+        })
     });
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,8 +45,8 @@
                                                 kí</i></a></li>
                                     <li class="text-left" id="clickchangePass"><a href="#"><i class="fa fa-key"> Đổi mật
                                                 khẩu</i></a></li>
-                                    <li class="text-left"><a href="/logout"><i class="fa fa-sign-out" id="sign-out">
-                                                Đăng xuất</i></a></li>
+                                    <li class="text-left" id="clickchangeUser"><a href="#"><i class="fa fa-user"> Thay đổi thông tin</i></a></li>
+                                    <li class="text-left"><a href="/logout"><i class="zmdi zmdi-power" id="sign-out"> Đăng xuất</i></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -125,7 +124,7 @@
             </div>
         </div>
     </div> <!-- End mainmenu area -->
-    <!-- Sửa thông tin Danh mục con -->
+    <!-- Sửa thông tin mật khẩu -->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -141,7 +140,7 @@
                             <div class="col-md-5">
                                 <label class="control-label f-13">Nhập lại mật khẩu cũ: </label>
                                 <div class="">
-                                    <input class="form-control" type="text" id="oldPass">
+                                    <input class="form-control" type="password" id="oldPass">
                                 </div>
                             </div>
                         </div>
@@ -149,7 +148,7 @@
                             <div class="col-md-5">
                                 <label class="control-label f-13">Nhập mật khẩu mới: </label>
                                 <div class="">
-                                    <input class="form-control" type="text" id="newPass">
+                                    <input class="form-control" type="password" id="newPass">
                                 </div>
                             </div>
                         </div>
@@ -157,7 +156,7 @@
                             <div class="col-md-5">
                                 <label class="control-label f-13">Xác nhận mật khẩu mới : </label>
                                 <div class="">
-                                    <input class="form-control" type="text" id="confirmNewPass">
+                                    <input class="form-control" type="password" id="confirmNewPass">
                                 </div>
                             </div>
                         </div>
@@ -166,6 +165,53 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-primary" id="changePass">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sửa thông tin người dùng -->
+    <div class="modal user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi thông tin người dùng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label f-13">Email : </label>
+                                <div class="">
+                                    <input class="form-control" type="text" id="email" value="<%= !customer[0] ? "" : customer[0].email %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label f-13">Số điện thoại: </label>
+                                <div class="">
+                                    <input class="form-control" type="text" id="phone" value="<%= !customer[0] ? "" : customer[0].phone %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label f-13">Địa chỉ: </label>
+                                <div class="">
+                                    <input class="form-control" type="text" id="address" value="<%= !customer[0] ? "" : customer[0].address %>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="changeUser">Cập nhật</button>
                 </div>
             </div>
         </div>
@@ -180,11 +226,17 @@
                 $("#displayName").text(displayName[1])
             }
         }
+        //modal đổi mật khẩu
         $(document).on('click', '#clickchangePass', function (e) {
             e.preventDefault();
             $('.fade').modal(); //Show modal
         })
-        //Cập nhật danh mục con
+        //modal thay đổi thông tin người dùng
+        $(document).on('click', '#clickchangeUser', function (e) {
+            e.preventDefault();
+            $('.user').modal(); //Show modal
+        })
+        //Cập nhật mật khẩu
         $(document).on("click", "#changePass", function (e) {
             e.preventDefault();
             var dataSend = {
@@ -213,6 +265,33 @@
                 swal("Thất bại !", "Mật khẩu mới không trùng nhau", "error")
             }
         })
+
+        //Cập nhật thông tin
+        $(document).on("click", "#changeUser", function (e) {
+            e.preventDefault();
+            var dataSend = {
+                email: $('#email').val(),
+                phone: $('#phone').val(),
+                address: $('#address').val(),
+            }
+            $.ajax({
+                method: "POST",
+                url: "/edit-user",
+                data: dataSend
+            }).done(function (resp) {
+                if (resp.code == 200) {
+                    swal("Thành công !", "Thông tin người dùng được cập nhật !", "success").then(function () {
+                        location.reload();
+                    })
+                }else if(resp.code==400){
+                    swal("Thất bại !", "Bạn cần phải đăng nhập", "error").then(function () {
+                        window.location.href="/login"
+                    })
+                } else {
+                    swal("Thất bại !", "Thông tin chưa được cập nhật", "error")
+                }
+            });
+        })
         $(document).on('click', '#ĐT', function (e) {
             window.location.href="/list-product"
         })
@@ -236,5 +315,11 @@
         })
         $(document).on('click', '#HW', function (e) {
             window.location.href="/list-product/?name=HW"
+        })
+        $(document).on('click', '#KM', function (e) {
+            window.location.href="/sales"
+        })
+        $(document).on('click', '#TT', function (e) {
+            window.location.href="/news"
         })
     </script>

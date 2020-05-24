@@ -1,0 +1,87 @@
+<%include ./layout/menuAdmin.ejs%>
+<style>
+    .note{
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DATA TABLE -->
+                    <h3 class="title-5 m-b-35">Danh sách khách hàng</h3>
+                    <div class="table-data__tool">
+                        <form id="search" method="GET" action="/customers">
+                            <div class="table-data__tool-left">
+                                <div class="rs-select2--light rs-select2--md">
+                                    <input type="text" name="email" placeholder="Tìm theo Email" class="form-control">
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <div class="rs-select2--light rs-select2--md">
+                                    <input type="text" name="fullname" placeholder="Tìm theo tên KH" class="form-control">
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <div class="rs-select2--light rs-select2--lg">
+                                    <input type="text" name="username" placeholder="Tìm theo tài khoản" class="form-control">
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <button class="au-btn-filter" type="submit">
+                                    <i class="zmdi zmdi-filter-list"></i>Lọc</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                    <div class="table-responsive table-responsive-data2">
+                        <table class="table table-data2">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Email</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Tài khoản</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    result.forEach(function(item,index){%>
+                                        <tr class="tr-shadow">
+                                            <td class="text-center"><%= index + 1 %></td>
+                                            <td class="desc note" title="<%= item.email %>"><%= item.email %></td>
+                                            <td class="desc note" title="<%= item.fullname %>"><%= item.fullname %></td>
+                                            <td class="desc note" title="<%= item.username %>"><%= item.username %></td>
+                                            <td class="desc note" title="<%= item.phone %>"><%= item.phone %></td>
+                                            <td class="desc note" title="<%= item.address %>"><%= item.address %></td>
+                                            <td class="desc">
+                                                <div class="table-data-feature">
+                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <i class="zmdi zmdi-delete" data-id="<%= item._id %>"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="spacer"></tr>
+                                    <%})
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ./layout/footerAdmin%>
+<script src="/customers/script.js"></script>
+

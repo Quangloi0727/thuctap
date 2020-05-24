@@ -12,7 +12,8 @@ var order = new mongoose.Schema({
     customerPay: { type: Number, default: null },//số tiền khách hàng phải trả
     deliveryCost: { type: Number, default: null },//Phí vận chuyển
     expectedTime: { type: Date, default: null },//Thời gian giao hàng dự kiến
-    created: { type: Date, default: Date.now }
+    created: { type: Date, default: Date.now },
+    createdConfirm: { type: Date, default: null },
 },
     { collection: 'orders' });
 module.exports = mongoose.model('order', order);

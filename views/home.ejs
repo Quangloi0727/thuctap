@@ -152,8 +152,8 @@
                         <%
                             for(let i=0;i<=2;i++){%>
                                 <div class="single-wid-product">
-                                    <a href="#"><img src="images/img_product/<%= productSells[i].product.images[0] %>" alt="" class="product-thumb"></a>
-                                    <h2><a href="#"><%= productSells[i].product.name %></a></h2>
+                                    <img src="images/img_product/<%= productSells[i].product.images[0] %>" alt="" class="product-thumb">
+                                    <h2><a href="/product-detail/<%= productSells[i].product._id %>"><%= productSells[i].product.name %></a></h2>
                                     <div class="product-wid-rating">
                                         <%
                                             rate.forEach(function(item){
@@ -210,49 +210,31 @@
                 </div>
                 <div class="col-md-4">
                     <div class="single-product-widget">
-                        <h2 class="product-wid-title">Phụ kiện giá rẻ</h2>
-                        <div class="single-wid-product">
-                            <a href="#"><img src="images/img_product/sac-du-phong.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="#">Sạc dự phòng</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins><%= numeral(100000).format('0,0') %>₫</ins> <del><%= numeral(10000).format('0,0') %>₫</del>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="#"><img src="images/img_product/op-lung.jpg" alt="" class="product-thumb"></a>
-                            <h2><a href="3">Ốp điện thoại</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins><%= numeral(30000).format('0,0') %>₫</ins>
-                            </div>                            
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="#"><img src="images/img_product/tai-nghe-iphone.png" alt="" class="product-thumb"></a>
-                            <h2><a href="#">Tai nghe chất lượng cao</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins><%= numeral(250000).format('0,0') %>₫</ins> <del><%= numeral(30000).format('0,0') %>₫</del>
-                            </div>                            
-                        </div>
+                        <h2 class="product-wid-title">Giảm giá cực mạnh </h2>
+                        <%
+                            sales.forEach(function(pr,index){
+                                if(index<3){%>
+                                    <div class="single-wid-product">
+                                        <a href="/product-detail/<%= pr._id %>"><img src="images/img_product/<%= pr.images[0] %>" alt="" class="product-thumb"></a>
+                                        <h2><a href="/product-detail/<%= pr._id %>"><%= pr.name %></a></h2>
+                                        <div class="product-wid-rating">
+                                            <%
+                                                rate.forEach(function(item){
+                                                    if(pr._id.toString()==item._id.toString()){
+                                                        for(let i=0;i< Math.round((item.rate / parseInt(item.length.length)));i++){%>
+                                                            <i class="fa fa-star"></i>
+                                                        <%}
+                                                    }
+                                                })
+                                            %>
+                                        </div>
+                                        <div class="product-wid-price">
+                                            <ins><%= numeral(pr.price).format('0,0') %>₫</ins> <del><%= numeral(pr.discount).format('0,0') %>₫</del>
+                                        </div>                            
+                                    </div>
+                                <%}
+                            })
+                        %>
                     </div>
                 </div>
             </div>

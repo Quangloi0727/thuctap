@@ -1,5 +1,6 @@
 var product = require('../modal/product.js');
 var category = require('../modal/category.js');
+var customer = require('../modal/customers.js');
 var rate = require('../modal/rate.js');
 var numeral = require('numeral');
 var async = require("async");
@@ -9,6 +10,12 @@ module.exports = function (app) {
     app.get('/product-detail/:id', function (req, res) {
         var id = req.params.id
         async.parallel({
+            //query tài khoản đăng nhập
+            customer: function (next) {
+                customer.aggregate([
+                    { $match: { "_id": mongoose.Types.ObjectId(req.session._id) } }
+                ], next)
+            },
             //query chi tiết sản phẩm
             productList: function (next) {
                 product.find({}, next);
@@ -83,6 +90,7 @@ module.exports = function (app) {
                     listMenu: results.listMenu,
                     productList: results.productList,
                     cart: req.session.cart,
+                    customer:results.customer,
                     relatedProduct: results.relatedProduct,
                     idCustomer: req.session._id ? req.session._id : null,
                     idDetail: id,
@@ -227,6 +235,12 @@ module.exports = function (app) {
             discount = "on";
         }
         async.parallel({
+            //query tài khoản đăng nhập
+            customer: function (next) {
+                customer.aggregate([
+                    { $match: { "_id": mongoose.Types.ObjectId(req.session._id) } }
+                ], next)
+            },
             //query đánh giá 
             rate: function (next) {
                 rate.aggregate([
@@ -302,6 +316,7 @@ module.exports = function (app) {
                     product: results.productDetail,
                     numeral: numeral,
                     rate:results.rate,
+                    customer:results.customer,
                     listPhone1: results.listPhone1,
                     listPhone2: results.listPhone2,
                     listMenu: results.listMenu,

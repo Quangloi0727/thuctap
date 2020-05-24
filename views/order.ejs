@@ -103,7 +103,7 @@ th{
                                         <tr>
                                             <td class="text-center"><%= index + 1 %></td>
                                             <td class="text-center"><%= item.code %></td>
-                                            <td class="text-center"><%= item.customer.phone %></td>
+                                            <td class="text-center">0<%= item.customer.phone %></td>
                                             <td class="text-center"><%= item.customer.fullname %></td>
                                             <td class="text-center"><%- moment(item.created).format('HH:mm DD/MM/YYYY')%></td>
                                             <td class="text-center"><% item.product.forEach(function(el){%>

@@ -34,14 +34,14 @@ module.exports = function (app) {
     //Xử lý thêm mới nhân viên
     app.post('/add-user', function (req, res, next) {
         async.waterfall([
-            function(callback) {
+            function (callback) {
                 user.find({}, function (err, item) {
                     code = "NV00" + (item.length + 1)
-                    callback(null,code)
+                    callback(null, code)
                 })
             }
         ], function (err, result) {
-            if(result){
+            if (result) {
                 var data = new user(req.body)
                 if (req.body.status && req.body.status == "true" || req.body.status && req.body.status == "on") {
                     data.status = true
@@ -60,7 +60,7 @@ module.exports = function (app) {
     });
     //Danh sách nhân viên
     app.get('/user', function (req, res, next) {
-        console.log("dữ liệu nhân được là",req.query)
+        console.log("dữ liệu nhân được là", req.query)
         var query = {}
         if (req.query.name) {
             query.fullname = { $regex: new RegExp(stringRegex(req.query.name), 'gi') };
@@ -69,7 +69,11 @@ module.exports = function (app) {
             query.code = { $regex: new RegExp(stringRegex(req.query.code), 'gi') };
         }
         user.aggregate([
-            { $match: query }
+            {
+                $match: {
+                    $and: [query, { username: { $ne: "adminstore" }}]
+                }
+            }
         ], function (err, user) {
             res.render('user', {
                 title: 'Danh sách nhân viên',

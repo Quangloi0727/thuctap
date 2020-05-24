@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <%if(result[0].status=="0"){%>
-                    <form id="order-edit">
+                    <form id="order-edit" style="width: 100%;">
                         <div class="col-lg-12">
                             <h2 class="title-1 m-b-25">Thông tin đặt hàng</h2>
                             <div class="row m-t-30">
@@ -107,7 +107,7 @@
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Địa chỉ giao hàng</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control-plaintext" readonly
-                                                value="<%= result[0].customer.address %>" name="delivererAddress">
+                                                value="<%= result[0].customer.address %>" name="delivererAddress" title="<%= result[0].customer.address %>">
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@
                                                         <%
                                                             result[0].productOrder.forEach(function(item2){
                                                                 if(item2.phoneId.toString()==item._id.toString()){%>
-                                                                    <%= numeral(item.discount).format('0,0') %>₫
+                                                                    <%= numeral(item2.quantityOrder*item.discount).format('0,0') %>₫
                                                                 <%}
                                                             })
                                                         %>
@@ -189,7 +189,7 @@
                         </div>
                     </form>
                 <%}else{%>
-                    <form id="order-edit">
+                    <form id="order-edit" style="width: 100%;">
                         <div class="col-lg-12">
                             <h2 class="title-1 m-b-25">Thông tin đặt hàng</h2>
                             <div class="row m-t-30">
@@ -263,7 +263,7 @@
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Địa chỉ giao hàng</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control-plaintext" readonly
-                                                value="<%= result[0].customer.address %>" name="delivererAddress">
+                                                value="<%= result[0].customer.address %>" name="delivererAddress" title="<%= result[0].customer.address %>">
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +309,7 @@
                                                         <%
                                                             result[0].productOrder.forEach(function(item2){
                                                                 if(item2.phoneId.toString()==item._id.toString()){%>
-                                                                    <%= numeral(item.price.discount).format('0,0') %>₫
+                                                                    <%= numeral(item2.quantityOrder*item.discount).format('0,0') %>₫
                                                                 <%}
                                                             })
                                                         %>

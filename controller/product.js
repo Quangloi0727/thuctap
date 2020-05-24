@@ -90,7 +90,7 @@ module.exports = function (app) {
         if (req.query.name) {
           query.name = { $regex: new RegExp(stringRegex(req.query.name), 'gi') };
         }
-        if (req.query.categoryId && req.query.categoryId!="-1") {
+        if (req.query.categoryId && req.query.categoryId != "-1") {
           query.categoryId = mongoose.Types.ObjectId(req.query.categoryId)
         }
         product.aggregate([
@@ -116,18 +116,58 @@ module.exports = function (app) {
   /*Trang sửa sản phẩm */
   app.get('/product-edit/:idEdit', function (req, res, next) {
     var idEdit = req.params.idEdit;
-    product.findById({ _id: idEdit }, function (err, product) {
-      res.render('product-edit', { title: 'Sửa thông tin sản phẩm', product: product });
-    });
+    async.parallel({
+      //query danh mục nhóm sản phẩm
+      groupProduct: function (next) {
+        category.find({ code: "phone", status: true }, function (err, data) {
+          if (data.length > 0) {
+            category.find({ parent_id: data[0]._id, status: true }, next)
+          } else {
+            next(null, data)
+          }
+        })
+      },
+      //query danh mục mã màu 
+      color: function (next) {
+        category.find({ code: "color", status: true }, function (err, data) {
+          if (data.length > 0) {
+            category.find({ parent_id: data[0]._id, status: true }).limit(5).exec(next)
+          } else {
+            next(null, data)
+          }
+        })
+      },
+      //chi tiết sản phẩm
+      product: function (next) {
+        product.findById({ _id: idEdit }, next)
+      }
+    },
+      function (err, results) {
+        res.render('product-edit', {
+          title: 'Sửa thông tin sản phẩm',
+          groupProduct: results.groupProduct,
+          color: results.color,
+          product: results.product
+        });
+      });
   });
   //Xử lý sửa sản phẩm
   app.post('/product-edit/:idEdit', function (req, res, next) {
     var idEdit = req.params.idEdit;
+    var categoryId = [];
+    req.body.category.forEach(function (item) {
+      categoryId.push(mongoose.Types.ObjectId(item))
+    })
     product.findById(idEdit, function (err, dulieu) {
       dulieu.name = req.body.name;
       dulieu.price = req.body.price;
       dulieu.quantity = req.body.quantity;
       dulieu.description = req.body.description;
+      dulieu.categoryId = categoryId;
+      dulieu.memory = req.body.memory;
+      dulieu.ram = req.body.ram;
+      dulieu.camera = req.body.camera;
+      dulieu.discount = req.body.discount;
       dulieu.save((error) => {
         res.json({ code: (error ? 500 : 200), message: error ? error : 'Sản phẩm đã được cập nhật !' });
       });

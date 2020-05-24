@@ -54,15 +54,77 @@
                                 <label for="select" class=" form-control-label">Nhóm sản phẩm</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <select name="groupProduct" id="groupProduct" class="form-control">
+                                <select name="category" id="category" class="form-control">
                                     <option value="-1">---Chọn nhóm điện thoại---</option>
-                                    <option value="Iphone" <% if(product.groupProduct=="Iphone"){%>selected<%} %>>Iphone</option>
-                                    <option value="Oppo" <% if(product.groupProduct=="Oppo"){%>selected<%} %>>Oppo</option>
-                                    <option value="SamSung" <% if(product.groupProduct=="SamSung"){%>selected<%} %>>SamSung</option>
-                                    <option value="Vivo" <% if(product.groupProduct=="Vivo"){%>selected<%} %>>Vivo</option>
-                                    <option value="Nokia" <% if(product.groupProduct=="Nokia"){%>selected<%} %>>Nokia</option>
-                                    <option value="Tổng hợp" <% if(product.groupProduct=="Tổng hợp"){%>selected<%} %>>Nhóm điện thoại khác</option>
+                                    <%
+                                        groupProduct.forEach(function(item){%>
+                                            <option value="<%= item._id %>" <%
+                                                    product.categoryId.forEach(function(item2){
+                                                        if(item2.toString()==item._id.toString()){%>
+                                                            selected
+                                                        <%}
+                                                    })
+                                                %>><%= item.name %></option>
+                                        <%})
+                                    %>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">Màu sản phẩm</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="category" id="color" class="form-control" multiple>
+                                    <option value="-1">---Chọn nhóm màu--</option>
+                                    <%
+                                        color.forEach(function(item){%>
+                                            <option value="<%= item._id %>" <%
+                                                    product.categoryId.forEach(function(item2){
+                                                        if(item2.toString()==item._id.toString()){%>
+                                                            selected
+                                                        <%}
+                                                    })
+                                                %>><%= item.name %></option>
+                                        <%})
+                                    %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Memory</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="memory" name="memory" placeholder="Nhập dung lượng bộ nhớ sản phẩm..." value="<%= product.memory %>"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Ram</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="ram" name="ram" placeholder="Nhập dung lượng ram sản phẩm..." value="<%= product.ram %>"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Camera</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="camera" name="camera" placeholder="Nhập thông tin camera sản phẩm..." value="<%= product.camera %>"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Giảm giá</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="discount" name="discount" placeholder="Nhập giá khuyến mãi sản phẩm..." value="<%= product.discount %>"
+                                    class="form-control">
                             </div>
                         </div>
                     

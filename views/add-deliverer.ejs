@@ -1,0 +1,65 @@
+<%include ./layout/menuAdmin.ejs%>
+<link rel="stylesheet" href="/stylesheets/dropzone.css">
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <p class="text-center"><strong style="color: #FF3333;font-size: 25px;">Thêm mới nhân viên</strong>
+                    </p>
+                    <i style="font-size: 12px;">Vui lòng nhập đầy đủ thông tin vào các trường bên dưới !</i>
+                </div>
+                <div class="card-body card-block">
+                    <form id="add-deliverer">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Tên nhân viên giao hàng</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="name" name="name" placeholder="Nhập tên nhân viên giao hàng.."
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">SĐT nhân viên giao hàng</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="phone" name="phone" placeholder="Nhập SĐT nhân viên giao hàng.."
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Trạng thái</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <div class="checkbox m-t-2 m-b-15">
+                                    <label>
+                                        <input type="checkbox" id="status" name="status" style="width: 20px;height: 20px;" value="true">
+                                        <i class="input-helper"></i>
+                                        <span class="p-l-10"> Kích hoạt</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="card-footer text-center">
+                        <button type="button" id="Taomoi" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Tạo mới
+                        </button>
+                        <button type="button" id="btn-back" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Quay lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%include ./layout/footerAdmin%>
+    </div>
+</div>
+<script src="/add-deliverer/script.js"></script>

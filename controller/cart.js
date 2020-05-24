@@ -1,4 +1,5 @@
 var product = require('../modal/product.js');
+var customer = require('../modal/customers.js');
 var category = require('../modal/category.js');
 var order = require('../modal/order.js');
 var orderDetail = require('../modal/order-detail.js');
@@ -10,6 +11,12 @@ module.exports = function (app) {
     //Thêm giỏ hàng
     app.get('/cart', function (req, res, next) {
         async.parallel({
+            //query tài khoản đăng nhập
+            customer: function (next) {
+                customer.aggregate([
+                    { $match: { "_id": mongoose.Types.ObjectId(req.session._id) } }
+                ], next)
+            },
             //query sản phẩm liên quan
             ralteProduct: function (next) {
                 product.find({},function(err,data){
@@ -72,6 +79,7 @@ module.exports = function (app) {
                     listMenu: results.listMenu,
                     product: results.product,
                     numeral: numeral,
+                    customer:results.customer,
                     ralteProduct: ralteProduct,
                     productOrder: req.session.cart,
                     idCustomer: req.session._id ? req.session._id : null,
@@ -101,6 +109,12 @@ module.exports = function (app) {
     //Danh sách đã đặt hàng
     app.get('/list-cart', function (req, res, next) {
         async.parallel({
+            //query tài khoản đăng nhập
+            customer: function (next) {
+                customer.aggregate([
+                    { $match: { "_id": mongoose.Types.ObjectId(req.session._id) } }
+                ], next)
+            },
             //query dánh sách sản phẩm
             product: function (next) {
                 product.find({}, next);
@@ -190,6 +204,7 @@ module.exports = function (app) {
                     product: results.product,
                     order: results.order,
                     numeral: numeral,
+                    customer:results.customer,
                     productOrder: req.session.cart,
                     idCustomer: req.session._id ? req.session._id : null,
                     quantityOrder: req.session.cart ? req.session.cart.length : 0

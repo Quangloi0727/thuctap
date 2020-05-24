@@ -1,0 +1,79 @@
+<%include ./layout/header.ejs%>
+<%
+    function totalAll(productOrder,product){
+        var totalAll=0;
+        productOrder.forEach(function(item2,i){
+            product.forEach(function(item1){
+                if(item1._id == item2.productId){
+                    totalAll+=item1.price * parseInt(item2.quantityOrder)
+                }
+            })
+        })
+        return totalAll;
+    }      
+%>
+<%
+    function totalDiscount(productOrder,product){
+        var totalDiscount=0;
+        productOrder.forEach(function(item2,i){
+            product.forEach(function(item1){
+                if(item1._id == item2.productId){
+                    totalDiscount+=item1.discount * parseInt(item2.quantityOrder)
+                }
+            })
+        })
+        return totalDiscount;
+    }      
+%>
+<style>
+    .time{
+        color: red;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .gio{
+        font-weight: bold;
+    }
+</style>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>Trung tâm khuyến mãi</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Page title area -->
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ex_lnews">
+                    <%
+                        sales.forEach(function(item){%>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-4 ex_thumbnails">
+                                    <img src="/images/img_product/<%= item.banner[0] %>" class="lazy lazydone" style="display: inline; opacity: 1;">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-8 ex_motan">
+                                    <h3><%= item.title %></h3>
+                                    <div class="ex_nmenta"><span class="time">Thời gian áp dụng : </span><span class="gio"><%= moment(item.form).format('DD/MM/YYYY') %> đến <%= moment(item.to).format('DD/MM/YYYY') %> </span></div>
+                                    <div class="ex_excp">
+                                        <p><%= item.content %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <%})
+                    %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ./layout/footer.ejs%>

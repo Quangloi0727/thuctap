@@ -1,0 +1,79 @@
+<%include ./layout/menuAdmin.ejs%>
+<!-- PAGE CONTAINER-->
+<div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <%include ./layout/headerAdmin.ejs%>
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DATA TABLE -->
+                    <h3 class="title-5 m-b-35">Top 10 sản phẩm bán chạy nhất</h3>
+                    <div class="table-data__tool">
+                        <form id="search" method="GET" action="/report-sells-product">
+                            <div class="table-data__tool-left">
+                                <div class="rs-select2--light rs-select2--md">
+                                    <input type="text" name="name" placeholder="Tìm theo tên SP" class="form-control" id="name" value="<%=name %>">
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <button class="au-btn-filter" type="submit">
+                                    <i class="zmdi zmdi-filter-list"></i>Lọc</button>
+                            </div>
+                        </form>
+                        
+                        <div class="table-data__tool-right">
+                            <button class="au-btn au-btn-icon au-btn--green au-btn--small" id="exportexcel">
+                                <i class="fa fa-file-excel-o m-r-10"></i>Xuất báo cáo</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive table-responsive-data2">
+                        <table class="table table-data2" id="table-supervisor-request-project">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">STT</th>
+                                    <th class="text-center">Ảnh sản phẩm</th>
+                                    <th class="text-center">Tên sản phẩm</th>
+                                    <th class="text-center">Giá sản phẩm</th>
+                                    <th class="text-center">Tổng số bán</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    productSells.forEach(function(item,index){%>
+                                        <tr class="tr-shadow">
+                                            <td class="text-center" style="line-height: 90px;"><%= index + 1 %></td>
+                                            <td><img src="/images/img_product/<%=item.product.images[0]%>" width="70px"; height="50px"></td>
+                                            <td class="desc text-center"><%= item.product.name %></td>
+                                            <td class="desc text-center"><%= numeral(item.product.price).format('0,0') %>₫</td>
+                                            <td class="desc text-center"><%= item.quantityOrder %></td>
+                                        </tr>
+                                        <tr class="spacer"></tr>
+                                    <%})
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                </div>
+            </div>
+            <%include ./layout/footerAdmin%>
+        </div>
+    </div>
+</div>
+<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+<script>
+    // xuất file báo cáo
+    $(document).on('click', '#exportexcel', function () {
+        $.ajax({
+            method: "GET",
+            url: "/report-sells-product",
+            data: {"report":"report","name":$("#name").val()}
+        }).done(function( resp ) {
+            if (resp.code==200) {
+                    window.location.href = resp.data;
+            }
+        });
+    })
+</script>
